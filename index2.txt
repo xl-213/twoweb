@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>七夕惊喜</title>
+  <style>
+    body {
+      font-family: 微软雅黑, sans-serif;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      background: #fff5f8; /* 浅粉色背景 */
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 漂浮爱心样式 */
+    .floating-heart {
+      position: absolute;
+      color: #ff4081; /* 粉色爱心 */
+      opacity: 0.7;
+      animation: float 6s linear infinite;
+      pointer-events: none; /* 点击穿透，不影响其他元素 */
+    }
+
+    /* 爱心漂浮动画 */
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.7;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-20vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(255, 64, 129, 0.15); /* 粉色阴影 */
+      max-width: 500px;
+      margin: 80px auto;
+      position: relative;
+      z-index: 10; /* 确保在爱心上方 */
+    }
+
+    /* 标题前的爱心装饰 */
+    h2::before, h2::after {
+      content: '♥';
+      color: #ff4081;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 70%;
+      padding: 12px;
+      font-size: 16px;
+      margin: 20px 0;
+      border: 1px solid #ffccd5; /* 浅粉色边框 */
+      border-radius: 5px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #ff4081; /* 聚焦时变深粉色 */
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 16px;
+      background: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #e60073;
+    }
+
+    #tips {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ff4081;
+    }
+  </style>
+</head>
+<body>
+  <!-- 音乐 -->
+  <audio src="bgm.mp3" autoplay loop muted controls>
+  </audio>
+
+  <!-- 主内容区 -->
+  <div class="container">
+    <h2>输入日期开启惊喜</h2>
+    <input type="text" id="dateInput" placeholder="格式：xxxx.xx.xx">
+    <button onclick="checkDate()">开启</button>
+    <div id="tips"></div>
+  </div>
+
+  <script>
+    // 生成漂浮爱心（数量可调整）
+    function createFloatingHearts() {
+      const heartCount = 12; // 爱心数量
+      for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerText = '♥';
+        
+        // 随机大小（12px-24px）
+        heart.style.fontSize = (Math.random() * 12 + 12) + 'px';
+        // 随机水平位置
+        heart.style.left = (Math.random() * 100) + 'vw';
+        // 随机动画时长（4-8秒）
+        heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        // 随机延迟出现
+        heart.style.animationDelay = (Math.random() * 8) + 's';
+        
+        document.body.appendChild(heart);
+      }
+    }
+
+    // 页面加载时生成爱心
+    createFloatingHearts();
+
+    // 日期验证逻辑（修改为跳转独立页面）
+    const targetDate = "2025.08.29"; 
+    // 替换为 message.html 实际的线上访问地址（本地测试或部署后需更新）
+    const messagePageUrl = "message.html"; 
+
+    function checkDate() {
+        const input = document.getElementById('dateInput').value;
+        const tips = document.getElementById('tips');
+        if (input === targetDate) {
+            // 跳转到 message.html 独立页面
+            window.location.href = messagePageUrl; 
+        } else {
+            tips.innerText = "日期不对哦～ 要输入正确日期才能开启";
+        }
+    }
+  </script>
+</body>
+</html>
